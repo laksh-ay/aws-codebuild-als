@@ -8,7 +8,7 @@ function App() {
   const [apple, setApple] = useState<string>("")
 
   const clickHandler = async () => {
-    const res = await axios.get('https://427e8qujl2.execute-api.us-east-1.amazonaws.com/dev/hello')
+    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/hello`)
     setApple(res.data)
   }
 
@@ -17,7 +17,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-        <a onClick={clickHandler}>Click me</a> to check if lambda is working or not
+        <a onClick={clickHandler} style={{cursor: "pointer", textDecorationLine: "underline"}}>Click me</a> to check if lambda is working or not
         </p>
         <p>{apple}</p>
       </header>
