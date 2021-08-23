@@ -22,7 +22,6 @@ phases:
       - yarn run build
       - echo Build complete of client
       - cd ../server
-      - sls config credentials --provider aws --key AKIA2UHGJELXPBFI2KQU --secret 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 -o
       - sls deploy
       - echo deployed
 
@@ -32,4 +31,4 @@ artifacts:
   discard-paths: no
   base-directory: client/build
 
-role: arn:aws:iam::730627384046:user/serverless-admin
+role: arn:aws:iam::730627384046:role/service-role/codebuild-als-service-role
