@@ -9,7 +9,7 @@ function App() {
 
   const clickHandler = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/hello`)
-    setApple(res.data)
+    setApple(res.data.email)
   }
 
   return (
