@@ -10,6 +10,9 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <p>
+        <a href="https://427e8qujl2.execute-api.us-east-1.amazonaws.com/dev/hello">Click me</a> to check if lambda is working or not
+        </p>
         <a
           className="App-link"
           href="https://reactjs.org"
