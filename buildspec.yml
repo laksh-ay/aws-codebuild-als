@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install: 
+    commands:
+      - apt-get update -y
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+      - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+      - apt-get update -y
+      - apt-get install -y yarn
+      - echo for installing serverless
+      - cd server
+      - yarn global add serverless
+      - yarn install
+      - echo for local serverless developement
+      - cd ../client
+      - yarn install
+
+  build:
+    commands:
+      - pwd
+      - yarn run build
+      - echo Build complete of client
+      - cd ../server
+      - sls config credentials --provider aws --key AKIA2UHGJELXPBFI2KQU --secret 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 -o
+      - sls deploy
+      - echo deployed
+
+artifacts:
+  files: 
+    - "**/*"
+  discard-paths: no
+  base-directory: client/build
+
+role: arn:aws:iam::730627384046:user/serverless-admin
