@@ -20,13 +20,13 @@ phases:
     commands:
       - cd ../server
       - sls deploy
+      - sls info > info.txt
+      - cat info.txt
       - echo Build complete of server
+      - LAMBDA_URL=$(grep -oP "(https:\/\/)[a-zA-Z0-9]+\.[a-z]+\-[a-z]+\.[a-z]{2}\-[a-z]+\-[0-9]{1}\.[a-z]+\.[a-z]{3}\/[a-z]+$" info.txt)
+      - echo $LAMBDA_URL
       - pwd
       - cd ../client
-      - echo $ApiUrl
-      - echo ${ApiUrl}
-      - echo $REACT_APP_GW_URL
-      - echo ${REACT_APP_GW_URL}
       - yarn run build
       - echo Build complete of client
       - echo deployed
