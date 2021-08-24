@@ -14,7 +14,7 @@ provider:
         - ""
         - - "https://"
           - Ref: "ApiGatewayRestApi"
-          - ".execute-apii.us-east-2.amazonaws.com/dev"
+          - ".execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}"
 
 functions:
   app:

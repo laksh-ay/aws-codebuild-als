@@ -24,7 +24,9 @@ phases:
       - pwd
       - echo $(process.env.GW_URL)
       - cd ../client
-      - yarn run build
+      - REACT_APP_GW_URL=$GW_UR yarn run build
+      - echo $GW_URL
+      - echo $REACT_APP_GW_URL
       - echo Build complete of client
       - echo deployed
 
