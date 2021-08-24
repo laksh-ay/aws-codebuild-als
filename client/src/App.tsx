@@ -17,7 +17,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-        <a onClick={clickHandler} style={{cursor: "pointer", textDecorationLine: "underline"}}>Click me</a> to check if lambda is working or not
+        <a onClick={clickHandler} style={{cursor: "pointer", textDecorationLine: "underline"}}>Click me</a> to check if lambda is working or knot
         </p>
         <p>{apple}</p>
       </header>
