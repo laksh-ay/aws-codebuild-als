@@ -19,15 +19,13 @@ phases:
   build:
     commands:
       - cd ../server
-      - sls deploy
-      - sls info > info.txt
-      - cat info.txt
+      - info=$(sls deploy)
+      - echo $info
       - echo Build complete of server
-      - LAMBDA_URL=$(grep -oP "(https:\/\/)[a-zA-Z0-9]+\.[a-z]+\-[a-z]+\.[a-z]{2}\-[a-z]+\-[0-9]{1}\.[a-z]+\.[a-z]{3}\/[a-z]+$" info.txt)
-      - echo $LAMBDA_URL
-      - pwd
+      - URL=$(echo $info | grep -oP "(https:\/\/)[a-zA-Z0-9]+\.[a-z]+\-[a-z]+\.[a-z]{2}\-[a-z]+\-[0-9]{1}\.[a-z]+\.[a-z]{3}\/[a-z]+$")
+      - echo $URL
       - cd ../client
-      - REACT_APP_BACKEND_URL=$LAMBDA_URL yarn run build
+      - REACT_APP_BACKEND_URL=$URL yarn run build
       - echo Build complete of client
       - echo deployed
 
@@ -43,3 +41,6 @@ artifacts:
   base-directory: client/build
 
 role: arn:aws:iam::730627384046:role/service-role/codebuild-als-service-role
+
+
+grep -oP "(https:\/\/)[a-zA-Z0-9]+\.[a-z]+\-[a-z]+\.[a-z]{2}\-[a-z]+\-[0-9]{1}\.[a-z]+\.[a-z]{3}\/[a-z]+$"
