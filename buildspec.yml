@@ -18,11 +18,14 @@ phases:
 
   build:
     commands:
-      - pwd
-      - yarn run build
-      - echo Build complete of client
       - cd ../server
       - sls deploy
+      - echo Build complete of server
+      - pwd
+      - echo $(process.env.GW_URL)
+      - cd ../client
+      - yarn run build
+      - echo Build complete of client
       - echo deployed
 
 artifacts:
