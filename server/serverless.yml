@@ -9,7 +9,7 @@ provider:
   stage: dev
   region: us-east-2
   environment:
-    GW_URL:
+    REACT_APP_GW_URL:
       Fn::Join:
         - ""
         - - "https://"

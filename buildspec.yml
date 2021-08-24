@@ -22,13 +22,16 @@ phases:
       - sls deploy
       - echo Build complete of server
       - pwd
-      - echo $(process.env.GW_URL)
       - cd ../client
-      - REACT_APP_GW_URL=$GW_UR yarn run build
-      - echo $GW_URL
-      - echo $REACT_APP_GW_URL
+      - yarn run build
       - echo Build complete of client
       - echo deployed
+
+
+cache:
+  paths:
+    - 'client/node_modules/**/*'
+    - 'server/node_modules/**/*'
 
 artifacts:
   files: 
