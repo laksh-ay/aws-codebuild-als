@@ -7,7 +7,7 @@ function App() {
   const [apple, setApple] = useState<string>('')
 
   const clickHandler = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_GW_URL}/hello`)
+    const res = await axios.get(`${process.env.ApiUrl}/hello`)
     setApple(res.data)
   }
 
