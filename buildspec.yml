@@ -41,6 +41,3 @@ artifacts:
   base-directory: client/build
 
 role: arn:aws:iam::730627384046:role/service-role/codebuild-als-service-role
-
-
-grep -oP "(https:\/\/)[a-zA-Z0-9]+\.[a-z]+\-[a-z]+\.[a-z]{2}\-[a-z]+\-[0-9]{1}\.[a-z]+\.[a-z]{3}\/[a-z]+$"
