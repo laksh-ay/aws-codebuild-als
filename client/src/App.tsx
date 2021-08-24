@@ -7,7 +7,7 @@ function App() {
   const [apple, setApple] = useState<string>('')
 
   const clickHandler = async () => {
-    const res = await axios.get(`${process.env.ApiUrl}/hello`)
+    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/hello`)
     setApple(res.data)
   }
 
@@ -25,7 +25,6 @@ function App() {
           to check if lambda is working or knot
         </p>
         <p>{apple}</p>
-        <p>{`${process.env.ApiUrl}`}</p>
       </header>
     </div>
   )

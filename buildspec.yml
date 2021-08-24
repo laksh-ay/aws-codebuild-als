@@ -27,7 +27,7 @@ phases:
       - echo $LAMBDA_URL
       - pwd
       - cd ../client
-      - yarn run build
+      - REACT_APP_BACKEND_URL=$LAMBDA_URL yarn run build
       - echo Build complete of client
       - echo deployed
 
