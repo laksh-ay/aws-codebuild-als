@@ -1,7 +1,7 @@
 version: 0.2
 
 phases:
-  install: 
+  install:
     commands:
       - apt-get update -y
       - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -23,10 +23,12 @@ phases:
       - echo Build complete of server
       - pwd
       - cd ../client
+      - echo $REACT_APP_GW_URL
+      - echo ${REACT_APP_GW_URL}
+      - echo $(REACT_APP_GW_URL)
       - yarn run build
       - echo Build complete of client
       - echo deployed
-
 
 cache:
   paths:
@@ -34,8 +36,8 @@ cache:
     - 'server/node_modules/**/*'
 
 artifacts:
-  files: 
-    - "**/*"
+  files:
+    - '**/*'
   discard-paths: no
   base-directory: client/build
 
