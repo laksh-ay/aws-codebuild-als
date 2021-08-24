@@ -23,9 +23,10 @@ phases:
       - echo Build complete of server
       - pwd
       - cd ../client
+      - echo $ApiUrl
+      - echo ${ApiUrl}
       - echo $REACT_APP_GW_URL
       - echo ${REACT_APP_GW_URL}
-      - echo $(REACT_APP_GW_URL)
       - yarn run build
       - echo Build complete of client
       - echo deployed
