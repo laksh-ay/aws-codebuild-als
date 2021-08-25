@@ -27,6 +27,7 @@ phases:
       # - cd ../client
       # - REACT_APP_BACKEND_URL=$URL yarn run build
       # - echo Build complete of client
+      - bash
       - STAGES=(stage qa production)
       - for i in $STAGES
       - do
