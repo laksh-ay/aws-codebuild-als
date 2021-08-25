@@ -32,7 +32,7 @@ phases:
       - string=$(echo $version | awk 'NR==1{print $2}')
       - number=$(echo $string | grep -oP "\d")
       - echo $number
-      - aws lambda create-alias --name test-alias --function-name express-api-dev-app --function-version $number
+      - aws lambda create-alias --name test-alias-2 --function-name express-api-dev-app --function-version $number
       - echo deployed
 
 cache:
