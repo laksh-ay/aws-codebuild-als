@@ -28,7 +28,6 @@ phases:
       # - REACT_APP_BACKEND_URL=$URL yarn run build
       # - echo Build complete of client
       - bash
-      - wget http://www.flareget.com/files/flareget/debs/amd64/flareget_2.3-24_amd64\(stable\)_deb.tar.gz
       - STAGES=([1]=stage [2]=qa [3]=prod);
       - for i in $STAGES
       - do
