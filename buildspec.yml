@@ -27,7 +27,8 @@ phases:
       # - cd ../client
       # - REACT_APP_BACKEND_URL=$URL yarn run build
       # - echo Build complete of client
-      - set -A STAGES stage prod qa
+      - declare -a STAGES
+      - STAGES=(stage prod qa)
       - for i in $STAGES
       - do
       - sls deploy
