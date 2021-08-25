@@ -1,7 +1,6 @@
 service: express-api
 
 plugins:
-  - serverless-aws-alias
   - serverless-offline
 
 provider:
