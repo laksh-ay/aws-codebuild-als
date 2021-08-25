@@ -2,30 +2,13 @@ service: express-api
 
 plugins:
   - serverless-offline
+  - serverless-aws-alias
 
 provider:
   name: aws
   runtime: nodejs14.x
   stage: dev
   region: us-east-2
-  environment:
-    REACT_APP_GW_URL:
-      Fn::Join:
-        - ''
-        - - 'https://'
-          - Ref: 'ApiGatewayRestApi'
-          - '.execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}'
-
-resources:
-  Outputs:
-    ApiUrl:
-      Description: 'The API Gateway URL'
-      Value:
-        Fn::Join:
-          - ''
-          - - 'https://'
-            - Ref: ApiGatewayRestApi
-            - '.execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}'
 
 functions:
   app:
