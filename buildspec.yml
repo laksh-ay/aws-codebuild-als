@@ -27,12 +27,16 @@ phases:
       # - cd ../client
       # - REACT_APP_BACKEND_URL=$URL yarn run build
       # - echo Build complete of client
+      - STAGES=(stage qa production)
+      - for i in $STAGES
+      - do
       - sls deploy
       - version=$(aws lambda list-versions-by-function --function-name express-api-dev-app --no-paginate --query "max_by(Versions, &to_number(to_number(Version) || '0'))" | grep -i "Version")
       - string=$(echo $version | awk 'NR==1{print $2}')
       - number=$(echo $string | grep -oP "\d")
       - echo $number
-      - aws lambda create-alias --name test-alias-2 --function-name express-api-dev-app --function-version $number
+      - aws lambda create-alias --name $i --function-name express-api-dev-app --function-version $number
+      - done
       - echo deployed
 
 cache:
