@@ -27,9 +27,9 @@ phases:
       # - cd ../client
       # - REACT_APP_BACKEND_URL=$URL yarn run build
       # - echo Build complete of client
-      - declare -a STAGES
-      - STAGES=(stage prod qa)
-      - for i in $STAGES
+      - set -a arr
+      - arr=(stage prod qa)
+      - for i in ${arr[*]}
       - do
       - sls deploy
       - version=$(aws lambda list-versions-by-function --function-name express-api-dev-app --no-paginate --query "max_by(Versions, &to_number(to_number(Version) || '0'))" | grep -i "Version")
