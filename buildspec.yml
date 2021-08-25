@@ -33,7 +33,7 @@ phases:
 cache:
   paths:
     # - 'client/node_modules/**/*'
-    - 'server/node_modules/**/*'
+    # - 'server/node_modules/**/*'
 
 artifacts:
   files:
