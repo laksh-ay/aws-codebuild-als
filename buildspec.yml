@@ -13,31 +13,33 @@ phases:
       - yarn global add serverless
       - yarn install
       - echo for local serverless developement
-      - cd ../client
-      - yarn install
+      # - cd ../client
+      # - yarn install
 
   build:
     commands:
-      - cd ../server
-      - info=$(sls deploy)
-      - echo $info
-      - echo Build complete of server
-      - URL=$(echo $info | grep -oP "(https:\/\/)[a-zA-Z0-9]+\.[a-z]+\-[a-z]+\.[a-z]{2}\-[a-z]+\-[0-9]{1}\.[a-z]+\.[a-z]{3}\/[a-z]+$")
-      - echo $URL
-      - cd ../client
-      - REACT_APP_BACKEND_URL=$URL yarn run build
-      - echo Build complete of client
+      # - cd ../server
+      # - info=$(sls deploy)
+      # - echo $info
+      # - echo Build complete of server
+      # - URL=$(echo $info | grep -oP "(https:\/\/)[a-zA-Z0-9]+\.[a-z]+\-[a-z]+\.[a-z]{2}\-[a-z]+\-[0-9]{1}\.[a-z]+\.[a-z]{3}\/[a-z]+$")
+      # - echo $URL
+      # - cd ../client
+      # - REACT_APP_BACKEND_URL=$URL yarn run build
+      # - echo Build complete of client
+      - sls deploy -s qa
       - echo deployed
 
 cache:
   paths:
-    - 'client/node_modules/**/*'
+    # - 'client/node_modules/**/*'
     - 'server/node_modules/**/*'
 
 artifacts:
   files:
     - '**/*'
   discard-paths: no
-  base-directory: client/build
+  base-directory: server
+  # base-directory: client/build
 
-role: arn:aws:iam::730627384046:role/service-role/codebuild-als-service-role
+role: arn:aws:iam::730627384046:role/service-role/codebuild-lambda-build-service-role

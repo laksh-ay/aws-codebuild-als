@@ -33,5 +33,3 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
-
-role: arn:aws:iam::730627384046:user/serverless-admin
