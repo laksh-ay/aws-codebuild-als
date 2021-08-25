@@ -27,7 +27,7 @@ phases:
       # - cd ../client
       # - REACT_APP_BACKEND_URL=$URL yarn run build
       # - echo Build complete of client
-      - sls deploy --alias prod
+      - sls deploy --alias production
       - echo deployed
 
 cache:
