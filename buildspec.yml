@@ -35,14 +35,10 @@ phases:
       # - cd server
       - obj=$(aws ssm get-parameters --names lambda-codebuild --query "Parameters[*].{Value:Value}" | grep -i "Value")
       - val=$(echo $obj | awk 'NR==1{print $2}')
-      - echo $arr
       - echo $val
       - arr=$(echo $val | grep -oP "\w+")
       - echo $arr
-      - for i in ${arr[@]}
-      - do
-      - echo $i
-      - done
+      - for i in ${arr[@]}; do echo $i; done
       - echo code is deployed
 
 cache:
