@@ -37,7 +37,7 @@ phases:
       # - val=$(echo $var | awk 'NR==1{print $2}')
       # - echo $arr
       # - echo $val
-      - set -a arr=("qa" "prod" "stage")
+      - declare -a arr=("qa" "prod" "stage")
       - for i in "${arr[@]}"
       - do
       - sls deploy
@@ -52,7 +52,7 @@ phases:
 cache:
   paths:
     # - 'client/node_modules/**/*'
-    # - 'server/node_modules/**/*'
+    - 'server/node_modules/**/*'
 
 artifacts:
   files:
