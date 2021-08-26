@@ -35,10 +35,10 @@ phases:
       # - cd server
       - obj=$(aws ssm get-parameters --names lambda-codebuild --query "Parameters[*].{Value:Value}" | grep -i "Value")
       - val=$(echo $obj | awk 'NR==1{print $2}')
+      - echo $arr
       - echo $val
       - arr=$(echo $val | grep -oP "\w+")
-      - echo $arr
-      - for i in ${arr}; do echo $i; done
+      - for i in ${arr}; do echo $i; sls deploy; version=$(aws lambda list-versions-by-function --function-name express-api-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); string=$(echo $version | awk 'NR==1{print $2}'); number=$(echo $string | grep -oP "\d"); echo $number; aws lambda create-alias --name $i --function-name express-api-dev-app --function-version $number; done
       - echo code is deployed
 
 cache:
