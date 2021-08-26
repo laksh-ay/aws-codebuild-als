@@ -33,7 +33,7 @@ phases:
       # - arr[1]=prod
       # - arr[2]=dev
       # - cd server
-      - arr=$(aws ssm get-parameters --names /lambda-codebuild --query "Parameters[*].{Value:Value} | grep -i "Value")
+      - arr=$(aws ssm get-parameters --names /lambda-codebuild --query "Parameters[*].{Value:Value}")
       - echo $arr
       - for i in ${arr[@]}
       - do
