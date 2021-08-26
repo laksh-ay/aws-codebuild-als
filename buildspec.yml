@@ -40,7 +40,7 @@ phases:
       - echo $number
       - aws lambda create-alias --name $i --function-name express-api-dev-app --function-version $number
       - done
-      - echo deployed
+      - echo code is deployed
 
 cache:
   paths:
