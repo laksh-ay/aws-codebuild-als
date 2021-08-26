@@ -33,9 +33,12 @@ phases:
       # - arr[1]=prod
       # - arr[2]=dev
       # - cd server
-      - arr=$(aws ssm get-parameters --names lambda-codebuild --query "Parameters[*].{Value:Value}" | grep -i "Value")
-      - echo $arr
-      - for i in ${arr[@]}
+      # - arr=$(aws ssm get-parameters --names lambda-codebuild --query "Parameters[*].{Value:Value}" | grep -i "Value")
+      # - val=$(echo $var | awk 'NR==1{print $2}')
+      # - echo $arr
+      # - echo $val
+      - set -a arr=("qa" "prod" "stage")
+      - for i in "${arr[@]}"
       - do
       - sls deploy
       - version=$(aws lambda list-versions-by-function --function-name express-api-dev-app --no-paginate --query "max_by(Versions, &to_number(to_number(Version) || '0'))" | grep -i "Version")
