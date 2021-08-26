@@ -28,10 +28,8 @@ phases:
       # - REACT_APP_BACKEND_URL=$URL yarn run build
       # - echo Build complete of client
       - set -a arr[3]
-      - arr[0]=stage
-      - arr[1]=prod
-      - arr[2]=qa
-      - for i in ${arr[*]}
+      - arr=("qa" "prod" "dev")
+      - for i in ${arr[@]}
       - do
       - echo $i
       - sls deploy
