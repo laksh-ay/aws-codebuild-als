@@ -38,7 +38,7 @@ phases:
       - echo $val
       - arr=$(echo $val | grep -oP "\w+")
       - echo $arr
-      - for i in ${arr[@]}; do echo $i; done
+      - for i in ${arr}; do echo $i; done
       - echo code is deployed
 
 cache:
