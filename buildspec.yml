@@ -34,6 +34,7 @@ phases:
       # - arr[2]=dev
       # - cd server
       - obj=$(aws ssm get-parameters --names lambda-codebuild --query "Parameters[*].{Value:Value}" | grep -i "Value")
+      - aws ssm get-parameters --names QA-title
       - val=$(echo $obj | awk 'NR==1{print $2}')
       - echo $arr
       - echo $val
