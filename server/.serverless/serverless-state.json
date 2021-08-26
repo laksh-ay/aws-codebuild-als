@@ -8,7 +8,7 @@
       "name": "aws",
       "runtime": "nodejs14.x",
       "stage": "dev",
-      "region": "us-east-1",
+      "region": "us-east-2",
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -86,7 +86,7 @@
           "AppLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/express-api-dev-app"
+              "LogGroupName": "/aws/lambda/express-api-app-app"
             }
           },
           "IamRoleLambdaExecution": {
@@ -115,7 +115,7 @@
                       "-",
                       [
                         "express-api",
-                        "dev",
+                        "app",
                         "lambda"
                       ]
                     ]
@@ -131,7 +131,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/express-api-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/express-api-app*:*"
                           }
                         ]
                       },
@@ -142,7 +142,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/express-api-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/express-api-app*:*:*"
                           }
                         ]
                       }
@@ -156,7 +156,7 @@
                   "-",
                   [
                     "express-api",
-                    "dev",
+                    "app",
                     {
                       "Ref": "AWS::Region"
                     },
@@ -173,11 +173,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/express-api/dev/1629374027748-2021-08-19T11:53:47.748Z/express-api.zip"
+                "S3Key": "serverless/express-api/app/1629968028567-2021-08-26T08:53:48.567Z/express-api.zip"
               },
-              "Handler": "index.handler",
+              "Handler": "src/index.handler",
               "Runtime": "nodejs14.x",
-              "FunctionName": "express-api-dev-app",
+              "FunctionName": "express-api-app-app",
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -191,20 +191,20 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionTnHBvzMx0AAyBiczSoE6vO3ASSGO30QB8qRH6Vzg": {
+          "AppLambdaVersionUdAJMdFV53DrYYxV9Kg4lbppA0Leg2vMZlwLAfIEU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "tnD/DM1iGtU9alAwrT9msLHzrUX/t5luGbETqvzOK48="
+              "CodeSha256": "depEVHOMikq80Z/7/AMuwi7kMbGYcjfuaQMx11CJgcI="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "dev-express-api",
+              "Name": "app-express-api",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -323,13 +323,13 @@
               "AppLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1629374017112": {
+          "ApiGatewayDeployment1629968018143": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               },
-              "StageName": "dev"
+              "StageName": "app"
             },
             "DependsOn": [
               "ApiGatewayMethodAny",
@@ -380,16 +380,16 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-express-api-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-express-api-app-ServerlessDeploymentBucketName"
             }
           },
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionTnHBvzMx0AAyBiczSoE6vO3ASSGO30QB8qRH6Vzg"
+              "Ref": "AppLambdaVersionUdAJMdFV53DrYYxV9Kg4lbppA0Leg2vMZlwLAfIEU"
             },
             "Export": {
-              "Name": "sls-express-api-dev-AppLambdaFunctionQualifiedArn"
+              "Name": "sls-express-api-app-AppLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -410,12 +410,12 @@
                   {
                     "Ref": "AWS::URLSuffix"
                   },
-                  "/dev"
+                  "/app"
                 ]
               ]
             },
             "Export": {
-              "Name": "sls-express-api-dev-ServiceEndpoint"
+              "Name": "sls-express-api-app-ServiceEndpoint"
             }
           }
         }
@@ -510,7 +510,7 @@
     "pluginsData": {},
     "functions": {
       "app": {
-        "handler": "index.handler",
+        "handler": "src/index.handler",
         "events": [
           {
             "http": "ANY /"
@@ -519,13 +519,13 @@
             "http": "ANY {proxy+}"
           }
         ],
-        "name": "express-api-dev-app",
+        "name": "express-api-app-app",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionTnHBvzMx0AAyBiczSoE6vO3ASSGO30QB8qRH6Vzg"
+        "versionLogicalId": "AppLambdaVersionUdAJMdFV53DrYYxV9Kg4lbppA0Leg2vMZlwLAfIEU"
       }
     },
     "configValidationMode": "warn",
@@ -542,15 +542,14 @@
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
-      },
-      "role": "arn:aws:iam::730627384046:user/serverless-admin"
+      }
     },
     "layers": {},
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "C:\\Users\\Shrey Rohatgi\\Desktop\\express-api\\.serverless\\express-api.zip"
+    "artifact": "C:\\Users\\Shrey Rohatgi\\Desktop\\aws-codebuild-als\\server\\.serverless\\express-api.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/express-api/dev/1629374027748-2021-08-19T11:53:47.748Z",
+    "artifactDirectoryName": "serverless/express-api/app/1629968028567-2021-08-26T08:53:48.567Z",
     "artifact": "express-api.zip"
   }
 }
