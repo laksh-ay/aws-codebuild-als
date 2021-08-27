@@ -52,7 +52,7 @@ phases:
       - for i in ${arr}; 
           do 
           echo $i;
-          cat .env
+          cat .env;
           TITLE_BIG=$(aws ssm get-parameters --names /${i}/TITLE --query "Parameters[*].{Value:Value}" | grep -i "Value");
           TITLE_COMMA=$(echo $TITLE_BIG | awk 'NR==1{print $2}');
           TITLE=$(echo $TITLE_COMMA | grep -oP "\w+");
