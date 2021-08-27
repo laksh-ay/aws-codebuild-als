@@ -4,6 +4,7 @@ env:
   parameter-store:
     DEV_ENV1 : "DEV_ENV1"
     QA_ENV1 : "QA_ENV1"
+    QA_TITLE : "QA-title"
   variables:
     DEV : "676"
 
@@ -22,6 +23,7 @@ phases:
       - echo for local serverless developement
       - echo $DEV_ENV1
       - echo $QA_ENV1
+      - echo $QA_TITLE
       - echo $DEV
       # - cd ../client
       # - yarn install
