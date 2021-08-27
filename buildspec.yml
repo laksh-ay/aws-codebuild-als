@@ -51,7 +51,7 @@ phases:
       - echo $arr
       - for i in ${arr};
           do
-          aws lambda delete-alias --function-name express-api-test3-app --name ${i}
+          aws lambda delete-alias --function-name express-api-test3-app --name ${i};
           done
       - for i in ${arr}; 
           do 
