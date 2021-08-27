@@ -21,13 +21,13 @@ phases:
       - yarn install
       - echo for local serverless developement
       - echo $DEV_ENV1
-      - $DEV_ENV1 >> file.txt
+      - echo $DEV_ENV1 >> file.txt
       - echo $DEV_TITLE
-      - $DEV_TITLE >> file.txt
+      - echo $DEV_TITLE >> file.txt
       - echo $QA_ENV1
-      - $QA_ENV1 >> file.txt
+      - echo $QA_ENV1 >> file.txt
       - echo $QA_TITLE
-      - $QA_TITLE >> file.txt
+      - echo $QA_TITLE >> file.txt
       - cat file.txt
       # - cd ../client
       # - yarn install
