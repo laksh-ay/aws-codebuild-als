@@ -49,6 +49,7 @@ phases:
       - echo $val
       - arr=$(echo $val | grep -oP "\w+")
       - echo $arr
+      - delete-alias --function-name express-api-jijiji-app --name prods
       - for i in ${arr}; 
           do 
           echo $i;
@@ -73,12 +74,12 @@ phases:
           SIGN=$(echo $SIGN_COMMA | grep -oP "\w+");
           sed -i "s/4/$SIGN/g" .env;
 
-          sls deploy -s test2; 
-          version=$(aws lambda list-versions-by-function --function-name express-api-test2-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
+          sls deploy -s test3; 
+          version=$(aws lambda list-versions-by-function --function-name express-api-test3-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
           string=$(echo $version | awk 'NR==1{print $2}'); 
           number=$(echo $string | grep -oP "\d"); 
           echo $number; 
-          aws lambda create-alias --name $i --function-name express-api-test2-app --function-version $number; 
+          aws lambda create-alias --name $i --function-name express-api-test3-app --function-version $number; 
           done
       - echo deployed
 
