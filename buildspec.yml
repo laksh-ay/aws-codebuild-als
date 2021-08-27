@@ -1,8 +1,8 @@
 version: 0.2
 
-env:
-  parameter-store:
-    arr : lambda-codebuild
+# env:
+#   parameter-store:
+    # arr : lambda-codebuild
     # TITLE-qa : "/qa/TITLE"
     # DESCRIPTION-qa : "/qa/DESCRIPTION"
     # BODY-qa : "/qa/BODY"
@@ -44,15 +44,10 @@ phases:
       # - REACT_APP_BACKEND_URL=$URL yarn run build
       # - echo Build complete of client
       # - cd ..
-      # - set -a arr[3]
-      # - arr[0]=qa
-      # - arr[1]=prod
-      # - arr[2]=dev
-      # - cd server
-      # - obj=$(aws ssm get-parameters --names lambda-codebuild --query "Parameters[*].{Value:Value}" | grep -i "Value")
-      # - val=$(echo $obj | awk 'NR==1{print $2}')
-      # - echo $val
-      # - arr=$(echo $val | grep -oP "\w+")
+      - obj=$(aws ssm get-parameters --names lambda-codebuild --query "Parameters[*].{Value:Value}" | grep -i "Value")
+      - val=$(echo $obj | awk 'NR==1{print $2}')
+      - echo $val
+      - arr=$(echo $val | grep -oP "\w+")
       - echo $arr
       - for i in ${arr}; 
           do 
@@ -77,12 +72,12 @@ phases:
           SIGN=$(echo $SIGN_COMMA | grep -oP "\w+");
           sed -i "s/1/$SIGN/g" .env;
 
-          sls deploy -s test; 
-          version=$(aws lambda list-versions-by-function --function-name express-api-test-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
+          sls deploy -s test1; 
+          version=$(aws lambda list-versions-by-function --function-name express-api-test1-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
           string=$(echo $version | awk 'NR==1{print $2}'); 
           number=$(echo $string | grep -oP "\d"); 
           echo $number; 
-          aws lambda create-alias --name $i --function-name express-api-test-app --function-version $number; 
+          aws lambda create-alias --name $i --function-name express-api-test1-app --function-version $number; 
           done
       - echo deployed
 
