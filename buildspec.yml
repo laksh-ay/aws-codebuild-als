@@ -49,7 +49,10 @@ phases:
       - echo $val
       - arr=$(echo $val | grep -oP "\w+")
       - echo $arr
-      - aws lambda delete-alias --function-name express-api-jijiji-app --name prods
+      - for i in ${arr};
+          do
+          aws lambda delete-alias --function-name express-api-test3-app --name ${i}
+          done
       - for i in ${arr}; 
           do 
           echo $i;
