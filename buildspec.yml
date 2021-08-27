@@ -3,6 +3,7 @@ version: 0.2
 env:
   parameter-store:
     DEV_ENV1 : "DEV_ENV1"
+    DEV_TITLE : "DEV-title"
     QA_ENV1 : "QA_ENV1"
     QA_TITLE : "QA-title"
   variables:
@@ -22,6 +23,7 @@ phases:
       - yarn install
       - echo for local serverless developement
       - echo $DEV_ENV1
+      - echo $DEV_TITLE
       - echo $QA_ENV1
       - echo $QA_TITLE
       - echo $DEV
