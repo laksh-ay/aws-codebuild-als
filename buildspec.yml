@@ -27,6 +27,8 @@ phases:
       - echo $QA_ENV1
       - echo $QA_ENV1 >> file.txt
       - echo $QA_TITLE
+      - $QA_TITLE > QA_STAR
+      - echo $QA_STAR
       - echo $QA_TITLE >> file.txt
       - cat file.txt
       # - cd ../client
