@@ -52,6 +52,7 @@ phases:
       - for i in ${arr}; 
           do 
           echo $i;
+          cat .env
           TITLE_BIG=$(aws ssm get-parameters --names /${i}/TITLE --query "Parameters[*].{Value:Value}" | grep -i "Value");
           TITLE_COMMA=$(echo $TITLE_BIG | awk 'NR==1{print $2}');
           TITLE=$(echo $TITLE_COMMA | grep -oP "\w+");
@@ -60,24 +61,24 @@ phases:
           DESCRIPTION_BIG=$(aws ssm get-parameters --names /${i}/DESCRIPTION --query "Parameters[*].{Value:Value}" | grep -i "Value");
           DESCRIPTION_COMMA=$(echo $DESCRIPTION_BIG | awk 'NR==1{print $2}');
           DESCRIPTION=$(echo $DESCRIPTION_COMMA | grep -oP "\w+");
-          sed -i "s/1/$DESCRIPTION/g" .env;
+          sed -i "s/2/$DESCRIPTION/g" .env;
 
           BODY_BIG=$(aws ssm get-parameters --names /${i}/BODY --query "Parameters[*].{Value:Value}" | grep -i "Value");
           BODY_COMMA=$(echo $BODY_BIG | awk 'NR==1{print $2}');
           BODY=$(echo $BODY_COMMA | grep -oP "\w+");
-          sed -i "s/1/$BODY/g" .env;
+          sed -i "s/3/$BODY/g" .env;
 
           SIGN_BIG=$(aws ssm get-parameters --names /${i}/SIGN --query "Parameters[*].{Value:Value}" | grep -i "Value");
           SIGN_COMMA=$(echo $SIGN_BIG | awk 'NR==1{print $2}');
           SIGN=$(echo $SIGN_COMMA | grep -oP "\w+");
-          sed -i "s/1/$SIGN/g" .env;
+          sed -i "s/4/$SIGN/g" .env;
 
-          sls deploy -s test1; 
-          version=$(aws lambda list-versions-by-function --function-name express-api-test1-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
+          sls deploy -s test2; 
+          version=$(aws lambda list-versions-by-function --function-name express-api-test2-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
           string=$(echo $version | awk 'NR==1{print $2}'); 
           number=$(echo $string | grep -oP "\d"); 
           echo $number; 
-          aws lambda create-alias --name $i --function-name express-api-test1-app --function-version $number; 
+          aws lambda create-alias --name $i --function-name express-api-test2-app --function-version $number; 
           done
       - echo deployed
 
