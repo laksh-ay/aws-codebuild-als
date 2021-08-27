@@ -57,24 +57,9 @@ phases:
       - for i in ${arr}; 
           do 
           echo $i;
-          if[${i} == qa];
-          sed -i "s/1/$TITLE-qa/g" .env;
-          sed -i "s/2/$DESCRIPTION-qa/g" .env;
-          sed -i "s/3/$BODY-qa/g" .env;
-          sed -i "s/4/$SIGN-qa/g" .env;
-          fi
-          if[${i} == prod];
-          sed -i "s/1/$TITLE-prod/g" .env;
-          sed -i "s/2/$DESCRIPTION-prod/g" .env;
-          sed -i "s/3/$BODY-prod/g" .env;
-          sed -i "s/4/$SIGN-prod/g" .env;
-          fi
-          if[${i} == stage];
-          sed -i "s/1/$TITLE-stage/g" .env;
-          sed -i "s/2/$DESCRIPTION-stage/g" .env;
-          sed -i "s/3/$BODY-stage/g" .env;
-          sed -i "s/4/$SIGN-stage/g" .env;
-          fi
+          if[${i} == qa]; then sed -i "s/1/$TITLE-qa/g" .env; sed -i "s/2/$DESCRIPTION-qa/g" .env; sed -i "s/3/$BODY-qa/g" .env; sed -i "s/4/$SIGN-qa/g" .env; fi
+          if[${i} == prod]; then sed -i "s/1/$TITLE-prod/g" .env; sed -i "s/2/$DESCRIPTION-prod/g" .env; sed -i "s/3/$BODY-prod/g" .env; sed -i "s/4/$SIGN-prod/g" .env; fi
+          if[${i} == stage]; then sed -i "s/1/$TITLE-stage/g" .env; sed -i "s/2/$DESCRIPTION-stage/g" .env; sed -i "s/3/$BODY-stage/g" .env; sed -i "s/4/$SIGN-stage/g" .env; fi
           sls deploy -s test; 
           version=$(aws lambda list-versions-by-function --function-name express-api-test-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
           string=$(echo $version | awk 'NR==1{print $2}'); 
