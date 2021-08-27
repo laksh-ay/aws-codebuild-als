@@ -56,7 +56,6 @@ phases:
       - for i in ${arr}; 
           do 
           echo $i;
-          cat .env;
           TITLE_BIG=$(aws ssm get-parameters --names /${i}/TITLE --query "Parameters[*].{Value:Value}" | grep -i "Value");
           TITLE_COMMA=$(echo $TITLE_BIG | awk 'NR==1{print $2}');
           TITLE=$(echo $TITLE_COMMA | grep -oP "\w+");
@@ -76,7 +75,7 @@ phases:
           SIGN_COMMA=$(echo $SIGN_BIG | awk 'NR==1{print $2}');
           SIGN=$(echo $SIGN_COMMA | grep -oP "\w+");
           sed -i "s/4/$SIGN/g" .env;
-
+          cat .env;
           sls deploy -s test3; 
           version=$(aws lambda list-versions-by-function --function-name express-api-test3-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
           string=$(echo $version | awk 'NR==1{print $2}'); 
