@@ -6,8 +6,6 @@ env:
     DEV_TITLE : "DEV-title"
     QA_ENV1 : "QA_ENV1"
     QA_TITLE : "QA-title"
-  variables:
-    DEV : "676"
 
 phases:
   install:
@@ -23,10 +21,14 @@ phases:
       - yarn install
       - echo for local serverless developement
       - echo $DEV_ENV1
+      - $DEV_ENV1 >> file.txt
       - echo $DEV_TITLE
+      - $DEV_TITLE >> file.txt
       - echo $QA_ENV1
+      - $QA_ENV1 >> file.txt
       - echo $QA_TITLE
-      - echo $DEV
+      - $QA_TITLE >> file.txt
+      - cat file.txt
       # - cd ../client
       # - yarn install
 
