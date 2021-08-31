@@ -79,7 +79,7 @@ phases:
         echo $number;
         aws lambda delete-alias --function-name als-demo-dev-app --name ${i};
         aws lambda create-alias --name $i --function-name als-demo-dev-app --function-version $number;
-        aws lambda add-permission --function-name als-demo-dev-app --qualifier $i --statement-id 1 --principal s3.amazonaws.com --action lambda:InvokeFunction --source-arn arn:aws:s3:::als-test --source-account ce94232e68dc96a118c9c393a09ab0a7b85ac268c8d443f118ae288b674db748;
+        aws lambda add-permission --function-name als-demo-dev-app --qualifier $i --statement-id 1 --principal s3.amazonaws.com --action lambda:InvokeFunction --source-arn arn:aws:s3:::als-test --source-account 683682269864;
         done
       - echo deployed
 
