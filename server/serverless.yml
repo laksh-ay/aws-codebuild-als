@@ -1,4 +1,4 @@
-service: als-demo
+service: als-demo1
 
 plugins:
   - serverless-offline
