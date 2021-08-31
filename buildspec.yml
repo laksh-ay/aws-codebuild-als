@@ -2,19 +2,19 @@ version: 0.2
 
 # env:
 #   parameter-store:
-    # arr : lambda-codebuild
-    # TITLE-qa : "/qa/TITLE"
-    # DESCRIPTION-qa : "/qa/DESCRIPTION"
-    # BODY-qa : "/qa/BODY"
-    # SIGN-qa : "/qa/SIGN"
-    # TITLE-prod : "/prod/TITLE"
-    # DESCRIPTION-prod : "/prod/DESCRIPTION"
-    # BODY-prod : "/prod/BODY"
-    # SIGN-prod : "/prod/SIGN"
-    # TITLE-stage : "/stage/TITLE"
-    # DESCRIPTION-stage : "/stage/DESCRIPTION"
-    # BODY-stage : "/stage/BODY"
-    # SIGN-stage : "/stage/SIGN"
+# arr : lambda-codebuild
+# TITLE-qa : "/qa/TITLE"
+# DESCRIPTION-qa : "/qa/DESCRIPTION"
+# BODY-qa : "/qa/BODY"
+# SIGN-qa : "/qa/SIGN"
+# TITLE-prod : "/prod/TITLE"
+# DESCRIPTION-prod : "/prod/DESCRIPTION"
+# BODY-prod : "/prod/BODY"
+# SIGN-prod : "/prod/SIGN"
+# TITLE-stage : "/stage/TITLE"
+# DESCRIPTION-stage : "/stage/DESCRIPTION"
+# BODY-stage : "/stage/BODY"
+# SIGN-stage : "/stage/SIGN"
 
 phases:
   install:
@@ -49,40 +49,40 @@ phases:
       - echo $val
       - arr=$(echo $val | grep -oP "\w+")
       - echo $arr
+      # - for i in ${arr};
+      #     do
+      #     aws lambda delete-alias --function-name versions-demo-dev-app --name ${i};
+      #     done
       - for i in ${arr};
-          do
-          aws lambda delete-alias --function-name versions-demo-dev-app --name ${i};
-          done
-      - for i in ${arr}; 
-          do 
-          echo $i;
-          TITLE_BIG=$(aws ssm get-parameters --names /${i}/TITLE --query "Parameters[*].{Value:Value}" | grep -i "Value");
-          TITLE_COMMA=$(echo $TITLE_BIG | awk 'NR==1{print $2}');
-          TITLE=$(echo $TITLE_COMMA | grep -oP "\w+");
-          sed -i "s/1/$TITLE/g" .env;
+        do
+        echo $i;
+        TITLE_BIG=$(aws ssm get-parameters --names /${i}/TITLE --query "Parameters[*].{Value:Value}" | grep -i "Value");
+        TITLE_COMMA=$(echo $TITLE_BIG | awk 'NR==1{print $2}');
+        TITLE=$(echo $TITLE_COMMA | grep -oP "\w+");
+        sed -i "s/1/$TITLE/g" .env;
 
-          DESCRIPTION_BIG=$(aws ssm get-parameters --names /${i}/DESCRIPTION --query "Parameters[*].{Value:Value}" | grep -i "Value");
-          DESCRIPTION_COMMA=$(echo $DESCRIPTION_BIG | awk 'NR==1{print $2}');
-          DESCRIPTION=$(echo $DESCRIPTION_COMMA | grep -oP "\w+");
-          sed -i "s/2/$DESCRIPTION/g" .env;
+        DESCRIPTION_BIG=$(aws ssm get-parameters --names /${i}/DESCRIPTION --query "Parameters[*].{Value:Value}" | grep -i "Value");
+        DESCRIPTION_COMMA=$(echo $DESCRIPTION_BIG | awk 'NR==1{print $2}');
+        DESCRIPTION=$(echo $DESCRIPTION_COMMA | grep -oP "\w+");
+        sed -i "s/2/$DESCRIPTION/g" .env;
 
-          BODY_BIG=$(aws ssm get-parameters --names /${i}/BODY --query "Parameters[*].{Value:Value}" | grep -i "Value");
-          BODY_COMMA=$(echo $BODY_BIG | awk 'NR==1{print $2}');
-          BODY=$(echo $BODY_COMMA | grep -oP "\w+");
-          sed -i "s/3/$BODY/g" .env;
+        BODY_BIG=$(aws ssm get-parameters --names /${i}/BODY --query "Parameters[*].{Value:Value}" | grep -i "Value");
+        BODY_COMMA=$(echo $BODY_BIG | awk 'NR==1{print $2}');
+        BODY=$(echo $BODY_COMMA | grep -oP "\w+");
+        sed -i "s/3/$BODY/g" .env;
 
-          SIGN_BIG=$(aws ssm get-parameters --names /${i}/SIGN --query "Parameters[*].{Value:Value}" | grep -i "Value");
-          SIGN_COMMA=$(echo $SIGN_BIG | awk 'NR==1{print $2}');
-          SIGN=$(echo $SIGN_COMMA | grep -oP "\w+");
-          sed -i "s/4/$SIGN/g" .env;
-          cat .env;
-          sls deploy; 
-          version=$(aws lambda list-versions-by-function --function-name versions-demo-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version"); 
-          string=$(echo $version | awk 'NR==1{print $2}'); 
-          number=$(echo $string | grep -oP "\d"); 
-          echo $number; 
-          aws lambda create-alias --name $i --function-name versions-demo-dev-app --function-version $number; 
-          done
+        SIGN_BIG=$(aws ssm get-parameters --names /${i}/SIGN --query "Parameters[*].{Value:Value}" | grep -i "Value");
+        SIGN_COMMA=$(echo $SIGN_BIG | awk 'NR==1{print $2}');
+        SIGN=$(echo $SIGN_COMMA | grep -oP "\w+");
+        sed -i "s/4/$SIGN/g" .env;
+        cat .env;
+        sls deploy;
+        version=$(aws lambda list-versions-by-function --function-name als-demo-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
+        string=$(echo $version | awk 'NR==1{print $2}');
+        number=$(echo $string | grep -oP "\d");
+        echo $number;
+        aws lambda update-alias --name $i --function-name als-demo-dev-app --function-version $number;
+        done
       - echo deployed
 
 cache:
