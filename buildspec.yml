@@ -49,10 +49,6 @@ phases:
       - echo $val
       - arr=$(echo $val | grep -oP "\w+")
       - echo $arr
-      # - for i in ${arr};
-      #     do
-      #     aws lambda delete-alias --function-name versions-demo-dev-app --name ${i};
-      #     done
       - for i in ${arr};
         do
         echo $i;
@@ -81,7 +77,8 @@ phases:
         string=$(echo $version | awk 'NR==1{print $2}');
         number=$(echo $string | grep -oP "\d");
         echo $number;
-        aws lambda update-alias --name $i --function-name als-demo-dev-app --function-version $number;
+        aws lambda delete-alias --function-name als-demo-dev-app --name ${i};
+        aws lambda create-alias --name $i --function-name als-demo-dev-app --function-version $number;
         done
       - echo deployed
 
