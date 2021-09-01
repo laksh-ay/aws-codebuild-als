@@ -1,4 +1,4 @@
-service: als
+service: lambda-als
 
 plugins:
   - serverless-offline
