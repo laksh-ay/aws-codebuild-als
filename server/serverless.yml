@@ -1,4 +1,4 @@
-service: unique
+service: service-als
 
 plugins:
   - serverless-offline
