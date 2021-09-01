@@ -73,12 +73,12 @@ phases:
         sed -i "s/4/$SIGN/g" .env;
         cat .env;
         sls deploy;
-        version=$(aws lambda list-versions-by-function --function-name lambda-als-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
+        version=$(aws lambda list-versions-by-function --function-name unique-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
         string=$(echo $version | awk 'NR==1{print $2}');
         number=$(echo $string | grep -oP "\d");
         echo $number;
-        aws lambda delete-alias --function-name lambda-als-app --name ${i};
-        aws lambda create-alias --name $i --function-name lambda-als-app --function-version $number;
+        aws lambda delete-alias --function-name unique-app --name ${i};
+        aws lambda create-alias --name $i --function-name unique-app --function-version $number;
         done
       - echo deployed
 
