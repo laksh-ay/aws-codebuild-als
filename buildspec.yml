@@ -91,7 +91,7 @@ phases:
       - echo $RESOURCE_ID
       - aws apigateway put-integration --rest-api-id $REST_API_ID --resource-id $RESOURCE_ID --http-method ANY --type AWS --integration-http-method POST --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-4-dev-app:${stageVariables.lambdaAlias}/invocations'
       - deployment_ids=$(aws apigateway get-deployments --rest-api-id $REST_API_ID | grep -i '"id"')
-      - regex_deployment_id=$(echo $resource_ids | awk 'NR==1{print $2}')
+      - regex_deployment_id=$(echo $deployment_ids | awk 'NR==1{print $2}')
       - DEPLOYMENT_ID=$(echo $regex_deployment_id | grep -oP "\w+")
       - for i in ${arr};
         do
