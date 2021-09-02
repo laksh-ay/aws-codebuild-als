@@ -83,8 +83,9 @@ phases:
       - info=$(sls info)
       - REST_IDS=$(echo $info | grep -oP "(\w+)(?:\.execute)")
       - REST_ID=$(echo $REST_IDS | awk 'NR==1{print $1}')
-      - REST_API_ID=$(echo $REST_ID | grep - oP "([a-zA-Z0-9]+)[^(\.execute)]")
+      - REST_API_ID=$(echo $REST_ID | grep -oP "([a-zA-Z0-9]+)[^(\.execute)]")
       - echo $REST_API_ID
+      - aws apigateway get-resources --rest-api-id $REST_API_ID
       - echo deployed
 
 cache:
