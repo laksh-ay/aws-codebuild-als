@@ -98,6 +98,7 @@ phases:
         do
         aws apigateway create-deployment --rest-api-id $REST_API_ID --stage-name $i --variables lambdaAlias=$i;
         done
+      - sls info
       - echo deployed
 
 cache:
