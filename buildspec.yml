@@ -73,12 +73,12 @@ phases:
         sed -i "s/4/$SIGN/g" .env;
         cat .env;
         sls deploy;
-        version=$(aws lambda list-versions-by-function --function-name als-server-5-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
+        version=$(aws lambda list-versions-by-function --function-name als-server-6-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
         string=$(echo $version | awk 'NR==1{print $2}');
         number=$(echo $string | grep -oP "\d");
         echo $number;
-        aws lambda delete-alias --function-name als-server-5-dev-app --name ${i};
-        aws lambda create-alias --name $i --function-name als-server-5-dev-app --function-version $number;
+        aws lambda delete-alias --function-name als-server-6-dev-app --name ${i};
+        aws lambda create-alias --name $i --function-name als-server-6-dev-app --function-version $number;
         done
       - info=$(sls info)
       - REST_IDS=$(echo $info | grep -oP "(\w+)(?:\.execute)")
@@ -89,11 +89,11 @@ phases:
       - regex_resource_id=$(echo $resource_ids | awk 'NR==1{print $2}')
       - RESOURCE_ID=$(echo $regex_resource_id | grep -oP "\w+")
       - echo $RESOURCE_ID
-      - created_resource_id=$(aws apigateway create-resource --rest-api-id $REST_API_ID --parent-id ${RESOURCE_ID} --path-part '{proxy+}' | grep -i '"id"')
-      - regex_created_resource_id=$(echo $created_resource_id | awk 'NR==1{print $2}')
-      - CREATED_RESOURCE_ID=$(echo $regex_created_resource_id | grep -oP "\w+")
-      - aws apigateway put-method --rest-api-id $REST_API_ID --resource-id $CREATED_RESOURCE_ID --http-method ANY --authorization-type "NONE" --no-api-key-required --request-parameters "method.request.header.custom-header=false"
-      - aws apigateway put-integration --rest-api-id $REST_API_ID --resource-id $CREATED_RESOURCE_ID --http-method ANY --type AWS --integration-http-method POST --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-5-dev-app:${stageVariables.lambdaAlias}/invocations'
+      # - created_resource_id=$(aws apigateway create-resource --rest-api-id $REST_API_ID --parent-id ${RESOURCE_ID} --path-part '{proxy+}' | grep -i '"id"')
+      # - regex_created_resource_id=$(echo $created_resource_id | awk 'NR==1{print $2}')
+      # - CREATED_RESOURCE_ID=$(echo $regex_created_resource_id | grep -oP "\w+")
+      # - aws apigateway put-method --rest-api-id $REST_API_ID --resource-id $CREATED_RESOURCE_ID --http-method ANY --authorization-type "NONE" --no-api-key-required --request-parameters "method.request.header.custom-header=false"
+      - aws apigateway put-integration --rest-api-id $REST_API_ID --resource-id $RESOURCE_ID --http-method ANY --type AWS --integration-http-method POST --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-6-dev-app:${stageVariables.lambdaAlias}/invocations'
       - for i in ${arr};
         do
         aws apigateway create-deployment --rest-api-id $REST_API_ID --stage-name $i --variables lambdaAlias=$i;
