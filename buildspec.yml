@@ -73,12 +73,12 @@ phases:
         sed -i "s/4/$SIGN/g" .env;
         cat .env;
         sls deploy;
-        version=$(aws lambda list-versions-by-function --function-name als-server-21-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
+        version=$(aws lambda list-versions-by-function --function-name als-server-22-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
         string=$(echo $version | awk 'NR==1{print $2}');
         number=$(echo $string | grep -oP "\d");
         echo $number;
-        aws lambda delete-alias --function-name als-server-21-dev-app --name ${i};
-        aws lambda create-alias --name $i --function-name als-server-21-dev-app --function-version $number;
+        aws lambda delete-alias --function-name als-server-22-dev-app --name ${i};
+        aws lambda create-alias --name $i --function-name als-server-22-dev-app --function-version $number;
         done
       - info=$(sls info)
       - REST_IDS=$(echo $info | grep -oP "(\w+)(?:\.execute)")
@@ -96,7 +96,7 @@ phases:
       - RESOURCE_ID=$(echo $regex_resource_id | grep -oP "\w+");
       - echo $RESOURCE_ID
       - rm file.txt
-      - aws apigateway put-integration --rest-api-id $REST_API_ID --resource-id $RESOURCE_ID --http-method ANY --type AWS --integration-http-method POST --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-21-dev-app:${stageVariables.lambdaAlias}/invocations'
+      - aws apigateway put-integration --rest-api-id $REST_API_ID --resource-id $RESOURCE_ID --http-method ANY --type AWS --integration-http-method POST --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-22-dev-app:${stageVariables.lambdaAlias}/invocations'
       - aws apigateway get-deployments --rest-api-id $REST_API_ID > file.txt
       - cat file.txt | grep -i '"id"' > file1.txt
       - regex_deploy_id=$(cat file1.txt | awk 'NR==1{print $2}')
@@ -105,8 +105,8 @@ phases:
       - rm file.txt file1.txt
       - for i in ${arr};
         do
-        aws lambda add-permission --function-name "arn:aws:lambda:us-east-2:683682269864:function:als-server-21-dev-app:${i}" --source-arn "arn:aws:execute-api:us-east-2:683682269864:$REST_API_ID/*/*/*" --principal apigateway.amazonaws.com --statement-id 5590b0e7-1e11-4918-a1af-87709f96d2zz --action lambda:InvokeFunction;
         aws apigateway create-stage --rest-api-id $REST_API_ID --stage-name $i --deployment-id $DEPLOY_ID --variables lambdaAlias=$i;
+        aws lambda add-permission --function-name "arn:aws:lambda:us-east-2:683682269864:function:als-server-22-dev-app:${i}" --source-arn "arn:aws:execute-api:us-east-2:683682269864:$REST_API_ID/*/*/*" --principal apigateway.amazonaws.com --statement-id 5590b0e7-1e11-4918-a1af-87709f96d2hz --action lambda:InvokeFunction;
         done
       - echo deployed
 
