@@ -96,7 +96,7 @@ phases:
       - RESOURCE_ID=$(echo $regex_resource_id | grep -oP "\w+");
       - echo $RESOURCE_ID
       - rm file.txt
-      - aws apigateway update-integration --rest-api-id $REST_API_ID --resource-id $RESOURCE_ID --http-method ANY --type AWS --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-five-dev-app:${stageVariables.lambdaAlias}/invocations'
+      - aws apigateway put-integration --rest-api-id $REST_API_ID --resource-id $RESOURCE_ID --http-method ANY --type AWS --integration-http-method POST --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-five-dev-app:${stageVariables.lambdaAlias}/invocations'
       - aws apigateway get-deployments --rest-api-id $REST_API_ID > file.txt
       - cat file.txt | grep -i '"id"' > file1.txt
       - regex_deploy_id=$(cat file1.txt | awk 'NR==1{print $2}')
