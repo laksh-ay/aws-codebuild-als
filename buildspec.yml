@@ -105,7 +105,6 @@ phases:
       - rm file.txt file1.txt
       - for i in ${arr};
         do
-        aws apigateway create-stage --rest-api-id $REST_API_ID --stage-name $i --deployment-id $DEPLOY_ID --variables lambdaAlias=$i;
         aws apigateway create-deployment --rest-api-id $REST_API_ID --stage-name $i --variables lambdaAlias=$i;
         done
       - for i in ${arr};
