@@ -1,4 +1,4 @@
-service: als-server-nine
+service: als-server-ten
 
 plugins:
   - serverless-offline
