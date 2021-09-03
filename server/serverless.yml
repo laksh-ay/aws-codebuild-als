@@ -1,4 +1,4 @@
-service: als-server-third
+service: als-server-four
 
 plugins:
   - serverless-offline
@@ -15,4 +15,4 @@ functions:
     handler: src/index.handler
     events:
       - http: ANY /
-      - http: 'GET {proxy+}'
+      - http: 'ANY {proxy+}'
