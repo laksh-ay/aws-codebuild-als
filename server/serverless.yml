@@ -1,4 +1,4 @@
-service: als-server-front
+service: als-server-back
 
 plugins:
   - serverless-offline
