@@ -1,4 +1,4 @@
-service: als-server-02
+service: als-server-03
 
 plugins:
   - serverless-offline
