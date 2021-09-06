@@ -1,4 +1,4 @@
-service: als-server-08
+service: als-server-react
 
 plugins:
   - serverless-offline
