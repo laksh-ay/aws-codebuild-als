@@ -1,4 +1,4 @@
-service: als-server-react
+service: als-server-front
 
 plugins:
   - serverless-offline
