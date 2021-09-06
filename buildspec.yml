@@ -73,14 +73,14 @@ phases:
         sed -i "s/4/$SIGN/g" .env;
         cat .env;
         sls deploy;
-        version=$(aws lambda list-versions-by-function --function-name als-server-thirteen-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
+        version=$(aws lambda list-versions-by-function --function-name als-server-fourteen-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
         string=$(echo $version | awk 'NR==1{print $2}');
         number=$(echo $string | grep -oP "\d");
         echo $number;
-        aws lambda delete-alias --function-name als-server-thirteen-dev-app --name ${i};
-        aws lambda create-alias --name $i --function-name als-server-thirteen-dev-app --function-version $number;
+        aws lambda delete-alias --function-name als-server-fourteen-dev-app --name ${i};
+        aws lambda create-alias --name $i --function-name als-server-fourteen-dev-app --function-version $number;
         done
-      - aws apigateway get-deployments --rest-api-id t8gm54okel | jq '.items[]' > file.txt
+      - aws apigateway get-deployments --rest-api-id $REST_API_ID | jq '.items[]' > file.txt
       - size=$(grep -o '{' file.txt | wc -w)
       - if [ "$size" = "1" ];
         then 
@@ -90,6 +90,7 @@ phases:
         echo $devId;
         aws apigateway delete-deployment --rest-api-id $REST_API_ID --deployment-id $devId;
         fi
+      - rm file.txt
       - info=$(sls info)
       - REST_IDS=$(echo $info | grep -oP "(\w+)(?:\.execute)")
       - REST_ID=$(echo $REST_IDS | awk 'NR==1{print $1}')
@@ -106,11 +107,11 @@ phases:
       - RESOURCE_ID=$(echo $regex_resource_id | grep -oP "\w+");
       - echo $RESOURCE_ID
       - rm file.txt
-      - aws apigateway put-integration --rest-api-id $REST_API_ID --resource-id $RESOURCE_ID --http-method ANY --type AWS_PROXY --integration-http-method POST --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-thirteen-dev-app:${stageVariables.lambdaAlias}/invocations'
+      - aws apigateway put-integration --rest-api-id $REST_API_ID --resource-id $RESOURCE_ID --http-method ANY --type AWS_PROXY --integration-http-method POST --uri 'arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:683682269864:function:als-server-fourteen-dev-app:${stageVariables.lambdaAlias}/invocations'
       - for i in ${arr};
         do
         aws apigateway create-deployment --rest-api-id $REST_API_ID --stage-name $i --variables lambdaAlias=$i;
-        aws lambda add-permission --function-name "arn:aws:lambda:us-east-2:683682269864:function:als-server-thirteen-dev-app:${i}"  --source-arn "arn:aws:execute-api:us-east-2:683682269864:$REST_API_ID/*/*/*" --principal apigateway.amazonaws.com   --statement-id 6eb58999-550a-41ge-9408-50041dc4300f --action lambda:InvokeFunction;
+        aws lambda add-permission --function-name "arn:aws:lambda:us-east-2:683682269864:function:als-server-fourteen-dev-app:${i}"  --source-arn "arn:aws:execute-api:us-east-2:683682269864:$REST_API_ID/*/*/*" --principal apigateway.amazonaws.com   --statement-id 6eb58999-550a-41ge-9408-50041dc4300f --action lambda:InvokeFunction;
         done
       - echo deployed
 
