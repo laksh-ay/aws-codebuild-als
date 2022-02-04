@@ -1,7 +1,7 @@
 version: 0.2
 
 # env:
-#   parameter-store:
+# parameter-store:
 # arr : lambda-codebuild
 # TITLE-qa : "/qa/TITLE"
 # DESCRIPTION-qa : "/qa/DESCRIPTION"
@@ -115,11 +115,11 @@ phases:
 cache:
   paths:
     # - 'client/node_modules/**/*'
-    - 'server/node_modules/**/*'
+    - "server/node_modules/**/*"
 
 artifacts:
   files:
-    - '**/*'
+    - "**/*"
   discard-paths: no
   base-directory: server
   # base-directory: client/build
