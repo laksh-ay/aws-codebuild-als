@@ -16,3 +16,4 @@ functions:
     events:
       - http:
           path: /{proxy+}
+          method: get
