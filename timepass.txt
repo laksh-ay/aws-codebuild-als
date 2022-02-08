@@ -1,0 +1,6 @@
+version=$(aws lambda list-versions-by-function --function-name als-server-back-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
+        string=$(echo $version | awk 'NR==1{print $2}');
+        number=$(echo $string | grep -oP "\d");
+        echo $number;
+        aws lambda delete-alias --function-name als-server-back-dev-app --name ${i};
+        aws lambda create-alias --name $i --function-name als-server-back-dev-app --function-version $number;
