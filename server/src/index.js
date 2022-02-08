@@ -5,7 +5,7 @@ require("dotenv").config();
 
 app.get("/hello", (req, res) => {
   res.send(
-    `Hello EARTH, ${process.env.TITLE} ${process.env.DESCRIPTION} ${process.env.BODY} ${process.env.SIGN}`
+    `Hello EARTH,  ${process.env.TITLE} ${process.env.DESCRIPTION} ${process.env.BODY} ${process.env.SIGN}`
   );
 });
 
