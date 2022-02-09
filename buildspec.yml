@@ -53,13 +53,19 @@ phases:
         do
         echo $i;
         TITLE_BIG=$(aws ssm get-parameters --names /${i}/TITLE --query "Parameters[*].{Value:Value}" | grep -i "Value");
+        echo ${TITLE_BIG};
         TITLE_COMMA=$(echo $TITLE_BIG | awk 'NR==1{print $2}');
+        echo ${TITLE_COMMA};
         TITLE=$(echo $TITLE_COMMA | grep -oP "\w+");
+        echo ${TITLE};
         sed -i "s/1/$TITLE/g" .env;
 
         DESCRIPTION_BIG=$(aws ssm get-parameters --names /${i}/DESCRIPTION --query "Parameters[*].{Value:Value}" | grep -i "Value");
+        echo ${DESCRIPTION_BIG};
         DESCRIPTION_COMMA=$(echo $DESCRIPTION_BIG | awk 'NR==1{print $2}');
+        echo ${DESCRIPTION_COMMA};
         DESCRIPTION=$(echo $DESCRIPTION_COMMA | grep -oP "\w+");
+        echo ${DESCRIPTION};
         sed -i "s/2/$DESCRIPTION/g" .env;
 
         BODY_BIG=$(aws ssm get-parameters --names /${i}/BODY --query "Parameters[*].{Value:Value}" | grep -i "Value");
@@ -71,6 +77,7 @@ phases:
         SIGN_COMMA=$(echo $SIGN_BIG | awk 'NR==1{print $2}');
         SIGN=$(echo $SIGN_COMMA | grep -oP "\w+");
         sed -i "s/4/$SIGN/g" .env;
+        echo "env fileeeeeeeeeeee"
         cat .env;
         sls deploy;
         done
