@@ -1,4 +1,4 @@
-service: als-server-left
+service: poc-final
 
 plugins:
   - serverless-offline
