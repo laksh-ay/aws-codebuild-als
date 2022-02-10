@@ -53,17 +53,13 @@ phases:
         do
         echo $i;
         TITLE_BIG=$(aws ssm get-parameters --names /${i}/TITLE --query "Parameters[*].{Value:Value}" | grep -i "Value");
-        echo ${TITLE_BIG};
         TITLE_COMMA=$(echo $TITLE_BIG | awk 'NR==1{print $2}');
-        echo ${TITLE_COMMA};
         TITLE=$(echo $TITLE_COMMA | grep -oP "\w+");
         echo ${TITLE};
         sed -i "s/1/$TITLE/g" .env;
 
         DESCRIPTION_BIG=$(aws ssm get-parameters --names /${i}/DESCRIPTION --query "Parameters[*].{Value:Value}" | grep -i "Value");
-        echo ${DESCRIPTION_BIG};
         DESCRIPTION_COMMA=$(echo $DESCRIPTION_BIG | awk 'NR==1{print $2}');
-        echo ${DESCRIPTION_COMMA};
         DESCRIPTION=$(echo $DESCRIPTION_COMMA | grep -oP "\w+");
         echo ${DESCRIPTION};
         sed -i "s/2/$DESCRIPTION/g" .env;
@@ -83,7 +79,7 @@ phases:
         version=$(aws lambda list-versions-by-function --function-name als-server-left-dev-app --no-paginate --query "max_by(Versions, &  to_number(to_number(Version) || '0'))" | grep -i "Version");
         string=$(echo $version | awk 'NR==1{print $2}');
         number=$(echo $string | grep -oP "\d");
-        echo $number;
+        echo number $number;
         aws lambda delete-alias --function-name als-server-left-dev-app --name ${i};
         aws lambda create-alias --name $i --function-name als-server-left-dev-app --function-version $number;
         done
